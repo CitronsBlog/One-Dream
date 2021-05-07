@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DateFormat</title>
+    <!-- 当前时间简单格式转换 -->
+    <script src="./date.js"></script>
+    <!-- dateFormar.js -->
+    <script src="./dateFormat.js"></script>
+    <style>
+        .now{
+            width: 50px;
+            height: 25px;
+        }
+        .box{
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+     <section>
+         <h2>当前时间简单格式转换</h2>
+         <div class="nowBox">
+            <button class="now" onclick="changeNowBtn()">转换</button>
+            <span id="nowText" style="color: red;"></span>
+         </div>
+
+         <label class="box" onclick="changeNow('now1')"> <input name="rex" checked type="radio" value="" />
+            <p>YYYY/mm/dd HH:MM:SS</p>
+        </label>
+        <label class="box" onclick="changeNow('now2')"> <input name="rex" type="radio" value="" />
+            <p>YYYY-mm-dd HH:MM:SS</p>
+        </label>
+        <label class="box" onclick="changeNow('now3')"> <input name="rex" type="radio" value="" />
+            <p>YYYY-mm-dd</p>
+        </label>
+        <label class="box" onclick="changeNow('now4')"> <input name="rex" type="radio" value="" />
+            <p> HH:MM:SS</p>
+        </label>
+     </section>
+     <section>
+        <h2>dateFormat.js</h2>
+        <div class="nowBox">
+           <!-- <button class="now" onclick="changeNowBtn()">转换</button> -->
+           <p>1.format(date, fmt)（功能同当前时间简单格式转换）</p>
+           <p>format 是将 Date类型的时间进行格式化的工具方法：</p>
+           <!-- <span id="nowText" style="color: red;"></span> -->
+           <p>DateFormat.format(new Date()) //不传 fmt，则默认为 yyyy-MM-dd hh:mm:ss ;<br>
+            DateFormat.format(new Date(), 'yyyy-MM-dd hh:mm:ss');<br>
+            DateFormat.format(new Date(), 'yyyy/MM/dd hh:mm:ss');<br>
+            DateFormat.format(new Date(), 'yyyy/MM/dd');<br>
+            ...
+        </p>
+        <p>2.formatToDate(dateStr)</p>
+        <p>formatToDate 是将 字符串类型的时间 转化成 Date 类型的工具方法：</p>
+        <!-- <span id="nowText" style="color: red;"></span> -->
+        <p>DateFormat.formatToDate('2017-04-18 12:12:12');<br>
+            DateFormat.formatToDate('2017/04/18 12:12:12');<br>
+         ...
+     </p> 
+     <p>3. getDateStart(date)</p>
+     <p>getDateStart 是得到一天的开始，工作中会碰到这种需要得到某一天的开始或结束的时间点。</p>
+     <!-- <span id="nowText" style="color: red;"></span> -->
+     <p>DateFormat.getDateStart(new Date());  //今天是4.18, 那返回的是今天 00:00:00的Date类型</p> 
+     <p>如果想返回字符串类型，可以使用 getDateStartStr(date, fmt) 方法，fmt非必传</p>
+     <!-- <span id="nowText" style="color: red;"></span> -->
+     <p>DateFormat.getDateStartStr(new Date(), 'yyyy-MM-dd hh:mm:ss'); //返回 2017-04-18 00:00:00</p> 
+     <p>4. getDateEnd(date)</p>
+     <p>getDateEnd 是得到一天的结束</p>
+     <!-- <span id="nowText" style="color: red;"></span> -->
+     <p>DateFormat.getDateEnd(new Date());  //今天是4.18, 那返回的是今天 23:59:59的Date类型</p> 
+     <p>如果想返回字符串类型，可以使用 getDateEndStr(date, fmt) 方法，fmt非必传</p>
+     <!-- <span id="nowText" style="color: red;"></span> -->
+     <p>DateFormat.getDateEndStr(new Date(), 'yyyy-MM-dd hh:mm:ss'); //返回 2017-04-18 23:59:59</p> 
+        </div>
+
+        <label class="box" onclick="changeNow('now1')"> <input name="rex" checked type="radio" value="" />
+           <p>YYYY/mm/dd HH:MM:SS</p>
+       </label>
+       <label class="box" onclick="changeNow('now2')"> <input name="rex" type="radio" value="" />
+           <p>YYYY-mm-dd HH:MM:SS</p>
+       </label>
+       <label class="box" onclick="changeNow('now3')"> <input name="rex" type="radio" value="" />
+           <p>YYYY-mm-dd</p>
+       </label>
+       <label class="box" onclick="changeNow('now4')"> <input name="rex" type="radio" value="" />
+           <p> HH:MM:SS</p>
+       </label>
+    </section>
+</body>
+<script>
+    // console.log(dateFormat('YYYY/mm/dd HH:MM:SS',new Date()));
+    // console.log(DateFormat.getDateStartStr(new Date(), 'yyyy-MM-dd hh:mm:ss'))
+    let dateFormartR = 'YYYY/mm/dd HH:MM:SS'
+   function changeNow(val){
+       switch (val){
+           case 'now1':
+                dateFormartR = 'YYYY/mm/dd HH:MM:SS'
+                break;
+            case 'now2':
+                dateFormartR = 'YYYY-mm-dd HH:MM:SS'
+                break;
+            case 'now3':
+                dateFormartR = 'YYYY-mm-dd'
+                break;
+            case 'now4':
+                dateFormartR = 'HH:MM:SS'
+                break;
+       }
+   }
+   function changeNowBtn(){
+       let text = document.querySelector('#nowText')
+       let date = dateFormat(dateFormartR,new Date())
+       text.innerHTML = date
+   }
+</script>
+</html>
