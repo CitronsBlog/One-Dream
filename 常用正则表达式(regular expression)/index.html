@@ -31,7 +31,8 @@
             border-radius: 20px;
             cursor: pointer;
         }
-        .msg{
+
+        .msg {
             padding-left: 10px;
         }
     </style>
@@ -50,7 +51,7 @@
 
 
     <label class="box" onclick="check('IDcard')"><input name="rex" type="radio" value="" />
-        <p>中国身份证（18位，第一代身份证是15位，第二代身份证是18位）：<span
+        <p>中国身份证（18位，第一代身份证是15位，第二代身份证是18位,只做了简单的格式校验）：<span
                 style="color: red;">/^[1-9]d{5}[1-9]d{3}((0d)|(1[0-2]))(([0|1|2]d)|3[0-1])d{4}$/</span></p>
     </label>
 
@@ -64,6 +65,32 @@
         <p>邮箱（允许有中文）：<span style="color: red;">/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/</span>
         </p>
     </label>
+
+    <label class="box" onclick="check('Postcode')"> <input name="rex" type="radio" value="" />
+        <p>邮编：<span style="color: red;">/^[0-9]{6}$/</span>
+        </p>
+    </label>
+    <label class="box" onclick="check('password1')"> <input name="rex" type="radio" value="" />
+        <p>至少8个字符，至少1个大写字母，1个小写字母和1个数字,不能包含特殊字符（非数字字母)：<span
+                style="color: red;">/^(?=.*[A-Z][a-z])(?=.*\d)[A-Z|a-z|\d]{8,}$/</span>
+        </p>
+    </label>
+    <label class="box" onclick="check('password2')"> <input name="rex" type="radio" value="" />
+        <p>至少8个字符，至少1个字母，1个数字和1个特殊字符（如果还需要匹配其他字符请自行添加）：<span
+                style="color: red;">/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&|/=+:;])[A-Za-z\d$@$!%*#?&|/=+:;]{8,}$/</span>
+        </p>
+    </label>
+    <label class="box" onclick="check('password3')"> <input name="rex" type="radio" value="" />
+        <p>至少8个字符，至少1个大写字母，1个小写字母，1个数字和1个特殊字符（如果还需要匹配其他字符请自行添加）：<span
+                style="color: red;">/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?#/|+=-_&])[A-Za-z\d$@$!%*?#/|+=-_&]{8,}/</span>
+        </p>
+    </label>
+    <label class="box" onclick="check('money')"> <input name="rex" type="radio" value="" />
+        <p>输入值只能为大于0或者正数，两位小数，其他符号不可输入。：<span
+                style="color: red;">/(^[1-9]{1}[0-9]*$)|(^[0-9]*\.[0-9]{1,2}$)/</span>
+        </p>
+    </label>
+
 
 
 
@@ -83,7 +110,7 @@
                 break;
             //中国身份证（18位，第一代身份证是15位，第二代身份证是18位）
             case 'IDcard':
-                rex = /^[1-9]d{5}[1-9]d{3}((0d)|(1[0-2]))(([0|1|2]d)|3[0-1])d{4}$/
+                rex = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
                 console.log(rex);
                 break;
             //邮箱（不允许有中文）
@@ -96,26 +123,44 @@
                 rex = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
                 console.log(rex);
                 break;
+            case 'Postcode':
+                rex = /^[0-9]{6}$/
+                console.log(rex);
+                break;
+            case 'password1':
+                rex = /^(?=.*[A-Z][a-z])(?=.*\d)[A-Z|a-z|\d]{8,}$/
+                console.log(rex);
+                break;
+            case 'password2':
+                rex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&|/=+:;])[A-Za-z\d$@$!%*#?&|/=+:;]{8,}$/
+                console.log(rex);
+                break;
+            case 'password3':
+                rex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?#/|+=-_&])[A-Za-z\d$@$!%*?#/|+=-_&]{8,}/
+                console.log(rex);
+                break;
+            case 'money':
+                rex = /(^[1-9]{1}[0-9]*$)|(^[0-9]*\.[0-9]{1,2}$)/
+                console.log(rex);
+                break;
         }
     }
 
     function rexCheck() {
         let val = document.querySelector('#text').value
-        if(val == '' || val == null){
+        if (val == '' || val == null) {
             alert('输入内容不能为空')
             return false
         }
+        // console.log(/(^[1-9]{1}[0-9]*$)|(^[0-9]*\.[0-9]{2}$)/.test('10.01'));
         let msg = document.querySelector('.msg')
-        if(rex.test(val)){
+        if (rex.test(val)) {
             msg.style.color = 'green'
             msg.innerHTML = '测试通过'
-        }else{
+        } else {
             msg.style.color = 'red'
             msg.innerHTML = '测试不通过'
         }
-            // console.log(rex,val);
-            // console.log(/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test('18373923376'));
-        
     }
 </script>
 
